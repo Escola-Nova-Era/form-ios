@@ -1,8 +1,8 @@
 # 🚀 Desafio 4 — Characters App (Consumo de API + Paginação)
 
-Bem-vindo ao quarto desafio da Formação Android.
+Bem-vindo ao quarto desafio da Formação iOS.
 
-Agora você irá trabalhar com **consumo de API real**, controle de requisições assíncronas e paginação, utilizando boas práticas de rede no Android.
+Agora você irá trabalhar com **consumo de API real**, controle de requisições assíncronas e paginação, utilizando boas práticas de rede no iOS.
 
 Este desafio marca sua entrada no mundo de aplicações conectadas à internet.
 
@@ -16,11 +16,11 @@ Criar um aplicativo chamado **Characters**, que:
 - Lista personagens com paginação infinita
 - Permite buscar personagens por nome
 - Exibe detalhes de um personagem
-- Permite favoritar personagens (armazenamento local com Room)
+- Permite favoritar personagens (armazenamento local com Core Data)
 
 ⚠️ Importante:
 - Dados principais vêm da API
-- Favoritos devem ser persistidos localmente com Room
+- Favoritos devem ser persistidos localmente com Core Data
 - Não utilizar arquitetura avançada (MVVM vem no próximo nível)
 
 ---
@@ -43,15 +43,15 @@ Endpoints utilizados:
 
 Este desafio consolida:
 
-- Retrofit
-- Coroutines
-- Threads
+- URLSession
+- async/await
+- DispatchQueue
 - Requisições GET
 - Paginação
-- Interceptor
+- URLRequest
 - Tratamento de erro
 - Estados de loading
-- Room Database (para favoritos)
+- Core Data (para favoritos)
 
 ---
 
@@ -81,9 +81,9 @@ O app deve conter 3 telas principais:
 
 Deve conter:
 
-- TopAppBar
+- NavigationBar
 - Campo de busca
-- RecyclerView com CardView
+- UITableView ou UICollectionView com células customizadas
 - Scroll infinito (paginação)
 - Loader no final da lista
 - Estado de erro
@@ -101,7 +101,7 @@ Funcionalidades:
 
 - Buscar por nome
 - Carregar próxima página automaticamente
-- Favoritar personagem (Room)
+- Favoritar personagem (Core Data)
 
 ---
 
@@ -120,88 +120,23 @@ Deve exibir:
 
 ---
 
-# ⭐ Favoritos (Room Database)
+# ⭐ Favoritos (Core Data)
 
 Os favoritos devem ser persistidos localmente.
 
 Você deve:
 
 - Criar uma Entity
-- Criar DAO
-- Criar Database
+- Criar um Persistent Container
+- Criar operações de busca, inserção, atualização e remoção
 - Implementar CRUD básico para favoritos
 
-Exemplo de Entity:
+Exemplo de Model:
 
-```kotlin
-@Entity
-data class FavoriteCharacter(
-    @PrimaryKey val id: Int,
-    val name: String,
-    val image: String,
-    val status: String
-)
-```
-## 🔄 Paginação
-
-- Utilizar o campo `page` da API  
-- Carregar próxima página ao atingir o fim da lista  
-- Evitar múltiplas requisições simultâneas  
-- Exibir loader no rodapé da lista  
-
----
-
-## ❗ Tratamento de Erros
-
-Você deve tratar:
-
-- Sem conexão  
-- Timeout  
-- Erro 404 (busca sem resultado)  
-- Erro 500  
-
-Exibir:
-
-- Tela de erro amigável  
-- Botão “Tentar novamente”  
-
----
-
-## 🧩 Regras Técnicas
-
-- Uso obrigatório de Retrofit  
-- Uso obrigatório de Coroutines  
-- Interceptor configurado  
-- Tratamento de erro adequado  
-- Paginação funcional  
-- Favoritos persistidos com Room  
-- Código organizado  
-- Separação clara entre camada de rede e UI  
-
----
-
-## ⭐ Parte Opcional (Avançado)
-
-- Filtro por status  
-- Filtro por gênero  
-- Tela exclusiva de favoritos  
-- Skeleton loading  
-- Cache simples de última busca  
-
----
-
-## 🏁 Resultado Esperado
-
-Ao concluir este desafio você será capaz de:
-
-- Consumir APIs reais  
-- Trabalhar com requisições assíncronas  
-- Implementar paginação  
-- Tratar erros de rede  
-- Trabalhar com estados de loading  
-- Persistir dados locais com Room  
-- Criar aplicações conectadas de nível intermediário  
-
-Você agora domina o fluxo completo de comunicação entre app e servidor.
-
-No próximo nível você aprenderá a organizar isso usando arquitetura profissional (MVVM).
+```swift
+struct FavoriteCharacter {
+    let id: Int
+    let name: String
+    let image: String
+    let status: String
+}
